@@ -1,0 +1,22 @@
+# Ignore artifacts:
+build
+coverage
+dist
+out
+storybook-static
+.next # if using Next.js
+
+# Ignore dependencies:
+node_modules
+
+# Ignore configuration and lock files that are often machine-generated:
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+package.json
+
+# Ignore specific config files or directories where formatting causes issues
+# (adjust as needed for your project):
+.eslintrc.js
+.prettierrc.js
+# ... other config files that you want to manage manually
