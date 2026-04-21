@@ -3,6 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import { ROUTES } from "../constants/routes";
 //Components
 import { Button } from "@/components/ui/button";
+import MapWithDraw from "../components/map/MapWithDraw";
+
 export function Router({}) {
   return (
     <Routes>
@@ -16,6 +18,7 @@ export function Router({}) {
         path={ROUTES.homePage}
       />
       <Route element={<h2>About</h2>} path={ROUTES.aboutPage} />
+      <Route element={<MapWithDraw />} path={ROUTES.mapPage} />
     </Routes>
   );
 }
