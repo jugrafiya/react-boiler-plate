@@ -81,6 +81,7 @@ export default function MapWithDraw() {
           activeMode={drawMode}
           onDelete={deleteSelected}
           selectedCount={selectedIds.length}
+          selectedIds={selectedIds}
         />
       </main>
     </div>

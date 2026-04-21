@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DrawingToolbar = ({ onModeChange, activeMode, onDelete, selectedCount }) => {
+const DrawingToolbar = ({ selectedIds, onModeChange, activeMode, onDelete, selectedCount }) => {
   const modes = [
     {
       id: 'draw_point',
@@ -33,7 +33,7 @@ const DrawingToolbar = ({ onModeChange, activeMode, onDelete, selectedCount }) =
       )
     }
   ];
-
+  console.log(selectedIds)
   return (
     <div className="absolute bottom-[30px] right-[134px] z-30 flex flex-row items-center gap-2 rounded-lg bg-white p-2 shadow-[0px_2px_7px_0px_#00000026] backdrop-blur-sm">
       {modes.map((mode) => (

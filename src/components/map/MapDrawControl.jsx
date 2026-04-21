@@ -1,13 +1,23 @@
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import { useControl } from 'react-map-gl/mapbox';
+import { useRef } from 'react';
 
 const MapDrawControl = (props) => {
+  const propsRef = useRef(props);
+  propsRef.current = props;
+  const eventsRef = useRef({});
+
   const draw = useControl(
     ({ map }) => {
-      map.on('draw.create', props.onCreate);
-      map.on('draw.update', props.onUpdate);
-      map.on('draw.delete', props.onDelete);
-      map.on('draw.selectionchange', props.onSelectionChange);
+      eventsRef.current.onCreate = (e) => propsRef.current.onCreate?.(e);
+      eventsRef.current.onUpdate = (e) => propsRef.current.onUpdate?.(e);
+      eventsRef.current.onDelete = (e) => propsRef.current.onDelete?.(e);
+      eventsRef.current.onSelectionChange = (e) => propsRef.current.onSelectionChange?.(e);
+
+      map.on('draw.create', eventsRef.current.onCreate);
+      map.on('draw.update', eventsRef.current.onUpdate);
+      map.on('draw.delete', eventsRef.current.onDelete);
+      map.on('draw.selectionchange', eventsRef.current.onSelectionChange);
 
       const drawInstance = new MapboxDraw({
         ...props,
@@ -19,10 +29,10 @@ const MapDrawControl = (props) => {
       return drawInstance;
     },
     ({ map }) => {
-      map.off('draw.create', props.onCreate);
-      map.off('draw.update', props.onUpdate);
-      map.off('draw.delete', props.onDelete);
-      map.off('draw.selectionchange', props.onSelectionChange);
+      map.off('draw.create', eventsRef.current.onCreate);
+      map.off('draw.update', eventsRef.current.onUpdate);
+      map.off('draw.delete', eventsRef.current.onDelete);
+      map.off('draw.selectionchange', eventsRef.current.onSelectionChange);
     },
     {
       position: props.position

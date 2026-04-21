@@ -45,11 +45,12 @@ export const useMapDraw = ({
 
   // Callback when selection changes (Edit Mode detection)
   const handleSelectionChange = useCallback((e) => {
+    console.log("Selection changed!", e.features);
     const ids = e.features.map(f => f.id);
     setSelectedIds(ids);
     if (onSelectionChange) onSelectionChange(e.features);
     resetMode?.()
-  }, [onSelectionChange]);
+  }, [onSelectionChange, resetMode]);
 
   const setDrawInstance = (instance) => {
     drawRef.current = instance;
@@ -62,8 +63,21 @@ export const useMapDraw = ({
   };
 
   const deleteSelected = () => {
-    if (drawRef.current) {
-      drawRef.current.trash();
+    if (drawRef.current && selectedIds.length > 0) {
+      // Get features before deleting
+      const deletedFeatures = features.filter(f => selectedIds.includes(f.id));
+      
+      // Delete from mapbox-gl-draw
+      drawRef.current.delete(selectedIds);
+      
+      // Manually update state since programmatic delete doesn't fire events
+      setFeatures(prev => prev.filter(f => !selectedIds.includes(f.id)));
+      setSelectedIds([]);
+      
+      if (onDrawDelete) {
+        onDrawDelete(deletedFeatures);
+      }
+      resetMode?.();
     }
   };
 
