@@ -33,9 +33,9 @@ const DrawingToolbar = ({ selectedIds, onModeChange, activeMode, onDelete, selec
       )
     }
   ];
-  console.log(selectedIds)
+  console.log(activeMode)
   return (
-    <div className="absolute bottom-[30px] right-[134px] z-30 flex flex-row items-center gap-2 rounded-lg bg-white p-2 shadow-[0px_2px_7px_0px_#00000026] backdrop-blur-sm">
+    <div className="absolute bottom-[30px] right-[50px] z-30 flex flex-row items-center gap-2 rounded-lg bg-white p-2 shadow-[0px_2px_7px_0px_#00000026] backdrop-blur-sm">
       {modes.map((mode) => (
         <button
           key={mode.id}
